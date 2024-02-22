@@ -4,13 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Invoice extends Model
 {
     use HasFactory;
 
-    public function customerDetails()
+    protected $fillable = ['customer', 'date', 'amount', 'status'];
+
+    /**
+     * Get the Customer that owns the invoice.
+     */
+    public function customerData(): BelongsTo
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer', 'id');
     }
 }

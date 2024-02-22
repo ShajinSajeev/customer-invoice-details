@@ -3,7 +3,7 @@
     <main class="px-7 flex-col flex gap-7 py-3">
         <div class="flex border-b py-2 justify-between">
             <h5 class="text-xl font-semibold">Customers Management</h5>
-            <a href="{{ route('customer.new') }}" class="bg-blue-500 text-white font-semibold px-3 rounded py-1.5">Add
+            <a href="{{ route('data.new',$type) }}" class="bg-blue-500 text-white font-semibold px-3 rounded py-1.5">Add
                 Customer</a>
         </div>
         <div class="w-full overflow-hidden
