@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Type;
 use Illuminate\Support\Arr;
 
 class ModularController extends Controller
 {
   public function index(Request $request, $type){
+
     $list=('App\Models\\'.(ucfirst($type)))::orderBy('id','Desc')->get();
-    return view('modular.index',compact('list','type'));  
+    $labels = Type::where('type',$type)->pluck('label');
+    return view('modular.index',compact('list','type','labels'));  
   }
 
   public function create(Request $request, $type){
+
     $customerList = Customer::orderBy('id','Desc')->get();
-    return view('modular.create',  compact('customerList','type'));
+    $labels = Type::where('type',$type)->get();
+    return view('modular.create',  compact('customerList','type','labels'));
   }
 
   public function store(Request $request, $type){
+
     $model = new ('App\Models\\'.(ucfirst($type)));
     $model->fill(Arr::only($request->all(), $model->getFillable()));
     $model->save();
@@ -27,9 +32,11 @@ class ModularController extends Controller
   }
 
   public function edit($type,$id){
+
     $customerList = Customer::all();
     $data = ('App\Models\\'.(ucfirst($type)))::find($id);
-    return view('modular.edit',compact('data','customerList','type'));
+    $labels = Type::where('type',$type)->get();
+    return view('modular.edit',compact('data','customerList','type','labels'));
   }
 
     public function update(Request $request,$type){
